@@ -12,7 +12,7 @@
 struct Node* createHeaderNode(); //返回一个链表类型的指针
 
 void insertFirst(struct Node* header, int x);
-void insertLirst(struct Node* header, int x);
+void insertLast(struct Node* header, int x);
 
 struct Node* find(struct Node* header, int x);
 
@@ -62,6 +62,32 @@ bool isEmpty(struct Node* header) {
 }
 
 
+
+//从表头插入 
+
+void insertFirst(struct Node* header, int x) {
+	Node* tmp = NULL:
+	tmp = (Node*)malloc(sizeof(Node));
+	tmp->element = x;//存入值
+	tmp->next = header->next;//二号节点次指针指向 头指针的次节点
+	header->next = tmp;
+}
+
+void insertLast(struct Node* header, int x) {
+	Node* tmp = NULL:
+	tmp = (Node*)malloc(sizeof(Node));
+	tmp->element = x;//存入值
+
+	Node* p = header;
+	while ((p->next)!=NULL) {
+		p = p->next;
+	}//递推到最后一个元素
+
+	p->next = tmp;//指向tmp
+
+	free(p); // 释放临时指针变量
+}
+
 int main(void) {
 	//创建头结点
 	Node* header = createHeaderNode();
@@ -74,11 +100,15 @@ int main(void) {
 		printf("List is not empty\n");
 	}
 
-	//从表头插入
+	//从表头插入，给其赋值为1 ,2 
 	insertFirst(header, 1);
 	insertFirst(header, 2);
 
-	//从尾部插入
+	printList(header);
+	printf("====================\n")
+
+
+	//从尾部插入,给其赋值为3,4
 	insertLast(header, 3);
 	insertLast(header, 4);
 
