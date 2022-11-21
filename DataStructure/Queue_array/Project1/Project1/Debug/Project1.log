@@ -1,0 +1,6 @@
+﻿  源.c
+D:\C_languange\DataStructure\Queue_array\Project1\Project1\源.c(34,3): warning C4033: “createQueue”必须返回值
+D:\C_languange\DataStructure\Queue_array\Project1\Project1\源.c(80,3): warning C4033: “frontAndDequeue”必须返回值
+D:\C_languange\DataStructure\Queue_array\Project1\Project1\源.c(42): warning C4715: “createQueue”: 不是所有的控件路径都返回值
+D:\C_languange\DataStructure\Queue_array\Project1\Project1\源.c(87): warning C4715: “frontAndDequeue”: 不是所有的控件路径都返回值
+  Project1.vcxproj -> D:\C_languange\DataStructure\Queue_array\Project1\Debug\Project1.exe

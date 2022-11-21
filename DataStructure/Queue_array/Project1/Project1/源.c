@@ -7,12 +7,18 @@ typedef struct QueueRecord* Queue;
 
 
 struct QueueRecord {
-	int  size;//当前容量
-	int  rear;//队末
-	int  front;//队首
+	int  size;//当前已有元素
+	int  rear;//队末 当前下标
+	int  front;//队首 当前下标
 	int  capacity;//最大容量
 	int* Array;//数组指针
 };
+
+void makeEmpty(Queue q) {
+	q->front = 1;
+	q->rear = 0;
+	q->size = 0;
+};//清空队列
 
 Queue createQueue(int maxElements) {
 	Queue q = malloc(sizeof(struct QueueRecord));
@@ -44,18 +50,17 @@ bool isFull(Queue q) {
 };//判满
 
 void disposeQueue(Queue q) {
-	free(q->Array);
-	free(q);
+	if (q != NULL) {
+		free(q->Array);
+		free(q);
+	}
+
 };//丢弃队列
 
-void makeEmpty(Queue q) {
-	q->front = 1;
-	q->rear = 0;
-	q->size = 0;
-};//清空队列
+
 
 int succ(int index, Queue q) {
-	index = index % q->capacity;
+	index = index % q->capacity; //大于size 之前是本身，大于之后将循环到队首
 	return index;
 };//计算下标
 
@@ -64,8 +69,9 @@ void enQueue(int x, Queue q) {
 		printf("Queue full!\n");
 		return;
 	}
-	q->size--;
-	//实现
+	q->size++;
+	q->rear = succ(++q->rear, q);
+	q->Array[q->rear] = x;
 };//进队
 
 int frontAndDequeue(Queue q) {
@@ -73,20 +79,35 @@ int frontAndDequeue(Queue q) {
 		printf("Queue empty!\n");
 		return;
 	}
-	q->size++;
-	//实现
+	int front = q->Array[q->front];
+	q->size--;
+	q->front = succ(++q->front, q);
 
-	return;
+	return front;
+}
 
-void printQueue(Queue q);//打印队列
-
+void printQueue(Queue q) {
+	int i = 0;
+	for (i = q->front; i < q->front + q->size; i++) {
+		printf("element is %d\n", q->Array[i % q->capacity]);
+	}
+}//打印队列
 
 
 int main() {
+	Queue q = createQueue(5);
+	printf("%d\n", isEmpty(q));
+	enQueue(5, q);
+	enQueue(4, q);
+	enQueue(1, q);
+	enQueue(2, q);
+	enQueue(3, q);
+	printf("%d\n", isFull(q));
+	printQueue(q);
+	frontAndDequeue(q);
+	printQueue(q);
 
 
-
-
-
+	disposeQueue(q);
 	return 0;
 }
